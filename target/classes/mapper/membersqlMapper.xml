@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- sqlSessionFactory -->
+<mapper namespace="com.my.mapper.MapperDAO">
+
+	<!-- resultMap : 리턴타입을 정의하기 위함(이를 사용하지 않고 resultType을 사용해도 됨) -->
+	<!-- column 에는 DB의 필드명을 적고 property에는 DTO 프라퍼티명을 적어준다. -->
+	<resultMap type="com.my.DTO.MemberDTO" id="resultList">
+		<result property="name" column="name"></result>
+		<result property="id" column="id" />
+	</resultMap>
+
+	<!-- MapperDAO 인터페이스의 메서드명이랑 id=""이거랑 같아야함, mapping 되기 때문에 -->
+	<select id="selectAll" resultMap="resultList">
+		select name, id from mytest
+	</select>
+
+	<insert id="insert" parameterType="String">
+		INSERT into mytest (id, name)
+		values (#{id}, #{name})
+	</insert>
+
+	<delete id="del" parameterType="String">
+		delete from mytest where id =
+		#{id }
+	</delete>
+
+	<select id="selectOne" parameterType="String"
+		resultType="com.my.DTO.MemberDTO">
+		select * from mytest where id = #{id }
+	</select>
+
+	<update id="modify" parameterType="com.my.DTO.MemberDTO">
+		update mytest set name=#{name
+		} where id=#{id }
+	</update>
+
+	<update id="modifyhash" parameterType="HashMap">
+		update mytest set
+		name=#{name
+		} where id=#{id }
+	</update>
+
+</mapper>
